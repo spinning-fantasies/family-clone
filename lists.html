@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="node_modules/@picocss/pico/css/pico.min.css">
+
+  <link rel="stylesheet" type="text/css" href="css/main.css">
+
+  <title>List of Lists</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    li {
+      margin-bottom: 8px;
+    }
+    input[type="text"] {
+      width: 80%;
+      padding: 8px;
+    }
+    button {
+      padding: 8px;
+    }
+    .list {
+      margin-left: 20px;
+    }
+
+    #listInput, button {
+      width: 42%;
+    }
+
+  </style>
+</head>
+<body>
+    <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+            <li><a href="/budget.html">Budget</a></li>
+            <li><a href="/calendar.html">Calendar</a></li>
+            <li><a href="/lists.html"><b>Lists</b></a></li>
+            <li><a href="/recipes.html">Recipes</a></li>
+        </ul>
+      </nav>
+    </nav>
+        
+    <h1>Lists</h1>
+        <input type="text" id="listInput" placeholder="Add a new list">
+  <button onclick="addList()">Add List</button>
+  <div id="listsContainer">
+    <!-- Lists will be populated here -->
+  </div>
+
+  <script>
+    // Function to add a new list to the container
+    function addList() {
+      const listInput = document.getElementById('listInput');
+      const listsContainer = document.getElementById('listsContainer');
+
+      const listTitle = listInput.value.trim();
+      if (listTitle === '') {
+        return;
+      }
+
+      const newList = document.createElement('ul');
+      const listTitleElement = document.createElement('h3');
+      listTitleElement.textContent = listTitle;
+      
+      newList.appendChild(listTitleElement);
+      listsContainer.appendChild(newList);
+
+      // Create an input and button to add items to the list
+      const itemInput = document.createElement('input');
+      itemInput.type = 'text';
+      itemInput.placeholder = 'Add a new item';
+      newList.appendChild(itemInput);
+
+      const addItemBtn = document.createElement('button');
+      addItemBtn.textContent = 'Add Item';
+      addItemBtn.addEventListener('click', function() {
+        addItem(newList, itemInput.value);
+        itemInput.value = '';
+      });
+      newList.appendChild(addItemBtn);
+    }
+
+    // Function to add a new item to the list
+    function addItem(list, itemText) {
+      if (itemText.trim() === '') {
+        return;
+      }
+
+      const listItem = document.createElement('li');
+      listItem.textContent = itemText;
+      list.appendChild(listItem);
+    }
+
+    // Event listener for adding a list when pressing "Enter" key
+    document.getElementById('listInput').addEventListener('keyup', function(event) {
+      if (event.key === 'Enter') {
+        addList();
+      }
+    });
+  </script>
+</body>
+</html>

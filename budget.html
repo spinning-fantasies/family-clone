@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Budget - Dépenses et Revenus</title>
+
+  <link rel="stylesheet" type="text/css" href="node_modules/@picocss/pico/css/pico.min.css">
+  <link rel="stylesheet" type="text/css" href="css/main.css">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    tr:hover {
+      background-color: #f2f2f2;
+    }
+    .remove-icon {
+      cursor: pointer;
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      text-align: center;
+      line-height: 16px;
+    }
+    form {
+      margin-top: 20px;
+      border: 1px solid #ccc;
+      padding: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      padding: 8px;
+    }
+    button {
+      padding: 8px;
+    }
+    .total-balance {
+      margin-top: 20px;
+      text-align: right;
+    }
+
+    #transactionTable, #transactionForm, #totalBalance {
+      width: 42%;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <ul>
+      <li><a href="/">Accueil</a></li>
+        <li><a href="/budget.html"><b>Budget</b></a></li>
+        <li><a href="/calendar.html">Calendar</a></li>
+        <li><a href="/lists.html">Lists</a></li>
+        <li><a href="/recipes.html">Recipes</a></li>
+    </ul>
+  </nav>
+
+  <h1>Budget - Expenses and Income</h1>
+  <table id="transactionTable">
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th>Amount (EUR)</th>
+        <th>Type</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Transactions will be displayed here -->
+    </tbody>
+  </table>
+
+  <div class="total-balance" id="totalBalance">
+    <!-- Total balance will be displayed here -->
+  </div>
+
+  <form id="transactionForm">
+    <label for="description">Description:</label>
+    <input type="text" id="description" required>
+
+    <label for="type">Type:</label>
+    <select id="type" required>
+      <option value="expense">Expense</option>
+      <option value="income">Income</option>
+    </select>
+
+    <label for="amount">Amount:</label>
+    <input type="number" id="amount" step="0.01" required>
+
+    <button type="submit">Add Transaction</button>
+  </form>
+
+
+
+  <script>
+    function displayTransactions(transactions) {
+      const tableBody = document.querySelector('#transactionTable tbody');
+      tableBody.innerHTML = '';
+
+      let totalBalance = 0;
+
+      transactions.forEach((transaction, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${transaction.description}</td>
+          <td>${transaction.amount}</td>
+          <td>${transaction.type}</td>
+          <td><span class="remove-icon" onclick="removeTransaction(${index})">&#10006;</span></td>
+        `;
+        tableBody.appendChild(row);
+
+        // Update the total balance
+        if (transaction.type === 'expense') {
+          totalBalance -= transaction.amount;
+        } else {
+          totalBalance += transaction.amount;
+        }
+      });
+
+      // Display the total balance
+      const totalBalanceElement = document.getElementById('totalBalance');
+      totalBalanceElement.textContent = `Total Balance: ${totalBalance.toFixed(2)}`;
+    }
+
+    function removeTransaction(index) {
+      const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+      transactions.splice(index, 1);
+      localStorage.setItem('transactions', JSON.stringify(transactions));
+      displayTransactions(transactions);
+    }
+
+    // Function to add a new transaction manually
+    function addTransaction(event) {
+      event.preventDefault();
+
+      const description = document.getElementById('description').value.trim();
+      const type = document.getElementById('type').value;
+      const amount = parseFloat(document.getElementById('amount').value);
+
+      if (!description || isNaN(amount) || amount <= 0) {
+        alert('Please fill out all fields correctly.');
+        return;
+      }
+
+      const transaction = {
+        description,
+        type,
+        amount,
+      };
+
+      // Retrieve existing transactions from local storage or initialize an empty array
+      const savedTransactions = JSON.parse(localStorage.getItem('transactions')) || [];
+
+      // Add the new transaction to the array
+      savedTransactions.push(transaction);
+
+      // Save the updated array to local storage
+      localStorage.setItem('transactions', JSON.stringify(savedTransactions));
+
+      // Clear the form fields
+      document.getElementById('transactionForm').reset();
+
+      // Display the updated list of transactions
+      displayTransactions(savedTransactions);
+    }
+
+    // Event listener for form submission to add a transaction
+    document.getElementById('transactionForm').addEventListener('submit', addTransaction);
+
+    // Display the saved transactions on page load
+    const savedTransactions = JSON.parse(localStorage.getItem('transactions')) || [];
+    displayTransactions(savedTransactions);
+  </script>
+</body>
+</html>

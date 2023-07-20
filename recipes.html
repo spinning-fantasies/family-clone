@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="node_modules/@picocss/pico/css/pico.min.css">
+  <link rel="stylesheet" type="text/css" href="css/main.css">
+
+  <title>Recettes - Cercle</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 8px;
+    }
+    button {
+      padding: 8px;
+    }
+    .recipe-container {
+      border: 1px solid #ccc;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    #recipeForm {
+      width: 42%;
+    }
+  </style>
+</head>
+<body>
+    <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/budget.html">Budget</a></li>
+          <li><a href="/calendar.html">Calendar</a></li>
+          <li><a href="/lists.html">Lists</a></li>
+          <li><a href="/recipes.html"><b>Recipes</b></a></li>
+        </ul>
+      </nav>
+  <h1>Recipes</h1>
+  <form id="recipeForm">
+    <label for="recipeTitle">Recipe Title:</label>
+    <input type="text" id="recipeTitle" required>
+
+    <label for="ingredients">Ingredients:</label>
+    <textarea id="ingredients" rows="4" required></textarea>
+
+    <label for="instructions">Instructions:</label>
+    <textarea id="instructions" rows="6" required></textarea>
+
+    <button type="submit">Save Recipe</button>
+  </form>
+
+  <div id="recipeList">
+    <!-- Saved recipes will be displayed here -->
+  </div>
+
+  <script>
+    // Function to save a recipe to local storage
+    function saveRecipe(event) {
+      event.preventDefault();
+
+      const recipeTitle = document.getElementById('recipeTitle').value;
+      const ingredients = document.getElementById('ingredients').value;
+      const instructions = document.getElementById('instructions').value;
+
+      if (!recipeTitle || !ingredients || !instructions) {
+        alert('Please fill out all fields before saving the recipe.');
+        return;
+      }
+
+      const recipe = {
+        title: recipeTitle,
+        ingredients,
+        instructions,
+      };
+
+      // Retrieve existing recipes from local storage or initialize an empty array
+      const savedRecipes = JSON.parse(localStorage.getItem('recipes')) || [];
+
+      // Add the new recipe to the array
+      savedRecipes.push(recipe);
+
+      // Save the updated array to local storage
+      localStorage.setItem('recipes', JSON.stringify(savedRecipes));
+
+      // Clear the form fields
+      document.getElementById('recipeForm').reset();
+
+      // Display the updated list of recipes
+      displayRecipes();
+    }
+
+    // Function to display the saved recipes
+    function displayRecipes() {
+      const recipeList = document.getElementById('recipeList');
+      recipeList.innerHTML = '';
+
+      // Retrieve recipes from local storage
+      const savedRecipes = JSON.parse(localStorage.getItem('recipes')) || [];
+
+      savedRecipes.forEach(recipe => {
+        const recipeContainer = document.createElement('div');
+        recipeContainer.classList.add('recipe-container');
+
+        const titleElement = document.createElement('h2');
+        titleElement.textContent = recipe.title;
+        recipeContainer.appendChild(titleElement);
+
+        const ingredientsElement = document.createElement('p');
+        ingredientsElement.textContent = recipe.ingredients;
+        recipeContainer.appendChild(ingredientsElement);
+
+        const instructionsElement = document.createElement('p');
+        instructionsElement.textContent = recipe.instructions;
+        recipeContainer.appendChild(instructionsElement);
+
+        recipeList.appendChild(recipeContainer);
+      });
+    }
+
+    // Event listener for form submission to save a recipe
+    document.getElementById('recipeForm').addEventListener('submit', saveRecipe);
+
+    // Display the saved recipes on page load
+    displayRecipes();
+  </script>
+</body>
+</html>

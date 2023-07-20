@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="node_modules/@picocss/pico/css/pico.min.css">
+  <link rel="stylesheet" type="text/css" href="css/main.css">
+
+  <title>Calendar - Cercle</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      text-align: center;
+      padding: 8px;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    td {
+      height: 100px;
+      cursor: pointer;
+    }
+    td.today {
+      background-color: #b3d4fc;
+    }
+  </style>
+</head>
+<body>
+    <nav>
+        <ul>
+          <li><a href="/">Accueil</a></li>
+          <li><a href="/budget.html">Budget</a></li>
+          <li><a href="/calendar.html"><b>Calendar</b></a></li>
+          <li><a href="/lists.html">Lists</a></li>
+          <li><a href="/recipes.html">Recipes</a></li>
+        </ul>
+      </nav>
+    <h1 id="current-month">July 2023</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Sun</th>
+        <th>Mon</th>
+        <th>Tue</th>
+        <th>Wed</th>
+        <th>Thu</th>
+        <th>Fri</th>
+        <th>Sat</th>
+      </tr>
+    </thead>
+    <tbody id="calendar-body">
+      <!-- Calendar days will be populated here -->
+    </tbody>
+  </table>
+
+  <script>
+    // Function to generate the calendar for a specific month and year
+    function generateCalendar(year, month) {
+      const calendarBody = document.getElementById('calendar-body');
+      const currentMonth = document.getElementById('current-month');
+
+      calendarBody.innerHTML = '';
+      
+      const firstDayOfMonth = new Date(year, month, 1);
+      const lastDayOfMonth = new Date(year, month + 1, 0);
+      const numberOfDays = lastDayOfMonth.getDate();
+      const startingDay = firstDayOfMonth.getDay();
+
+      currentMonth.textContent = new Date(year, month).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+      let date = 1;
+
+      // Generate rows for the calendar
+      for (let i = 0; i < 6; i++) {
+        const row = document.createElement('tr');
+        
+        // Generate cells for each day of the week
+        for (let j = 0; j < 7; j++) {
+          const cell = document.createElement('td');
+
+          if (i === 0 && j < startingDay) {
+            // Fill empty cells before the first day of the month
+            cell.textContent = '';
+          } else if (date <= numberOfDays) {
+            cell.textContent = date;
+            if (isToday(year, month, date)) {
+              cell.classList.add('today');
+            }
+            date++;
+          } else {
+            // Fill empty cells after the last day of the month
+            cell.textContent = '';
+          }
+
+          row.appendChild(cell);
+        }
+
+        calendarBody.appendChild(row);
+      }
+    }
+
+    // Check if a given date is today
+    function isToday(year, month, day) {
+      const today = new Date();
+      return today.getFullYear() === year && today.getMonth() === month && today.getDate() === day;
+    }
+
+    // Get the current year and month
+    const currentDate = new Date();
+    let currentYear = currentDate.getFullYear();
+    let currentMonth = currentDate.getMonth();
+
+    // Generate the initial calendar
+    generateCalendar(currentYear, currentMonth);
+
+    // Event listener for clicking on a date cell
+    document.getElementById('calendar-body').addEventListener('click', function(event) {
+      const cell = event.target;
+      const selectedDate = cell.textContent;
+      if (selectedDate !== '') {
+        alert(`You clicked on ${selectedDate}/${currentMonth + 1}/${currentYear}`);
+        // Add your custom event handling logic here
+      }
+    });
+  </script>
+</body>
+</html>
