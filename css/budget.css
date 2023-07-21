@@ -1,16 +1,4 @@
-* {
-    margin: 0px;
-    padding: 0px;
-    font-family: Arial, Helvetica, sans-serif;
-}
 
-a:hover {
-    font-weight: bold;
-}
-table {
-    border-collapse: collapse;
-    width: 100%;
-  }
   th, td {
     border: 1px solid #ccc;
     padding: 8px;
@@ -21,6 +9,8 @@ table {
   }
   tr:hover {
     background-color: #f2f2f2;
+    color: rgb(21, 25, 43);
+    font-weight: bolder;
   }
   .remove-icon {
     cursor: pointer;
@@ -30,22 +20,23 @@ table {
     text-align: center;
     line-height: 16px;
   }
-  form {
-    margin-top: 20px;
-    border: 1px solid #ccc;
-    padding: 20px;
-  }
   label {
     display: block;
-    margin-top: 10px;
+    width: 100%;
+    margin: 10px 0 5px 0;
   }
   input[type="text"],
   input[type="number"] {
+    width: 98%;
+    padding: 8px;
+  }
+  button,
+  select {
     width: 100%;
     padding: 8px;
   }
   button {
-    padding: 8px;
+    margin-top: 30px;
   }
   .total-balance {
     margin-top: 20px;

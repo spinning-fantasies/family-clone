@@ -4,67 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Budget</title>
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
-  <link rel="stylesheet" type="text/css" href="css/main.css">
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-    }
-    h1 {
-      margin-bottom: 20px;
-    }
-    table {
-      border-collapse: collapse;
-      width: 100%;
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 8px;
-      text-align: center;
-    }
-    th {
-      background-color: #f2f2f2;
-    }
-    tr:hover {
-      background-color: #f2f2f2;
-    }
-    .remove-icon {
-      cursor: pointer;
-      display: inline-block;
-      width: 16px;
-      height: 16px;
-      text-align: center;
-      line-height: 16px;
-    }
-    form {
-      margin-top: 20px;
-      border: 1px solid #ccc;
-      padding: 20px;
-    }
-    label {
-      display: block;
-      margin-top: 10px;
-    }
-    input[type="text"],
-    input[type="number"] {
-      width: 100%;
-      padding: 8px;
-    }
-    button {
-      padding: 8px;
-    }
-    .total-balance {
-      margin-top: 20px;
-      text-align: right;
-    }
-
-    #transactionTable, #transactionForm, #totalBalance {
-      max-width: 42%;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="css/budget.css">
 </head>
 <body>
 
@@ -79,6 +20,8 @@
   </nav>
 
   <h1>Budget - Expenses and Income</h1>
+  <main>
+    <section>
   <table id="transactionTable">
     <thead>
       <tr>
@@ -96,7 +39,8 @@
   <div class="total-balance" id="totalBalance">
     <!-- Total balance will be displayed here -->
   </div>
-
+</section>
+<section>
   <form id="transactionForm">
     <label for="description">Description:</label>
     <input type="text" id="description" required>
@@ -112,7 +56,8 @@
 
     <button type="submit">Add Transaction</button>
   </form>
-
+</section>
+</main>
 
 
   <script>
@@ -194,5 +139,7 @@
     const savedTransactions = JSON.parse(localStorage.getItem('transactions')) || [];
     displayTransactions(savedTransactions);
   </script>
+
+    <footer></footer>
 </body>
 </html>

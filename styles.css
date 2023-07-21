@@ -1,0 +1,110 @@
+@import url(normalize.css);
+:root {
+--back: linear-gradient(45deg, hsl(220, 41%, 11%), hsl(221, 40%, 11%), hsl(222, 39%, 12%));
+--text-shadow: 1px 1px 4px rgb(21, 25, 43); 
+--text-shadow-hover: 2px 2px 8px rgb(21, 25, 43), -2px -2px 8px rgb(21, 25, 43); 
+--text-menu: hsl(195, 85%, 41%);
+--menu-hover: hsl(195, 71%, 45%);
+} 
+body {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 100vw;
+    min-height: 100vh;
+    background: var(--back);
+    backdrop-filter: blur(5px);
+    color: whitesmoke;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+nav {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 2em;
+}
+nav>ul {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-around;
+    width: 60%;
+    height: 1em;
+}
+nav>ul>li {
+    list-style-type: none;
+}
+nav>ul>li>a {
+    text-decoration: none;
+    color: var(--text-menu);
+    font-size: 1em;
+    font-weight: bold;
+    text-rendering: optimizeSpeed;
+    text-shadow: var(--text-shadow);
+    transition: .2s ease;
+}
+nav>ul>li>a:hover {
+    color: var(--menu-hover);
+    font-size: 1.1em;
+    font-weight: bolder;
+    text-shadow: var(--text-shadow-hover);
+}
+h1 {
+    color: hsl(0, 0%, 97%);
+    font-size: 2.3em;
+    font-weight: bolder;
+    text-rendering: optimizeSpeed;
+    animation: 8s titre ease-in-out infinite;
+}
+@keyframes titre {
+    from {
+        text-shadow: 1px 1px 4px rgba(216, 216, 216, .5);
+    }
+    50% {
+        text-shadow: 8px 8px 44px rgba(216, 216, 216, .3),
+        -8px -8px 44px rgba(216, 216, 216, .3);
+    }
+    to {
+        text-shadow: 1px 1px 4px rgba(216, 216, 216, .5);
+    }
+}
+main {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: space-around;
+    justify-content: space-around;
+    width: 100%;
+    height: auto;
+}
+section {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    justify-content: space-around;
+    width: 50%;
+    height: auto;
+}
+table {
+    min-width: 90%;
+    border-collapse: collapse;
+}
+thead {
+    color: rgb(21, 25, 43);
+}
+form {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: space-around;
+    min-width: 90%;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    padding: 20px;
+}
+footer {
+    width: 100vw;
+    height: 20vh;
+}
