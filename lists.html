@@ -3,39 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
-  <link rel="stylesheet" type="text/css" href="css/main.css">
-
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" type="text/css" href="css/lists.css">
   <title>List of Lists</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    li {
-      margin-bottom: 8px;
-    }
-    input[type="text"] {
-      width: 80%;
-      padding: 8px;
-    }
-    button {
-      padding: 8px;
-    }
-    .list {
-      margin-left: 20px;
-    }
-
-    #listInput, button {
-      max-width: 42%;
-    }
-
-  </style>
 </head>
 <body>
     <nav>
@@ -50,12 +20,17 @@
     </nav>
         
     <h1>Lists</h1>
+    <main>
+      <section id="inputList">
         <input type="text" id="listInput" placeholder="Add a new list">
   <button onclick="addList()">Add List</button>
+</section>
+<section id="list">
   <div id="listsContainer">
     <!-- Lists will be populated here -->
   </div>
-
+</section>
+</main>
   <script>
     // Function to add a new list to the container
     function addList() {
@@ -71,22 +46,24 @@
       const listTitleElement = document.createElement('h3');
       listTitleElement.textContent = listTitle;
       
-      newList.appendChild(listTitleElement);
       listsContainer.appendChild(newList);
 
       // Create an input and button to add items to the list
       const itemInput = document.createElement('input');
       itemInput.type = 'text';
       itemInput.placeholder = 'Add a new item';
+      itemInput.style.width = '25em';
       newList.appendChild(itemInput);
 
       const addItemBtn = document.createElement('button');
       addItemBtn.textContent = 'Add Item';
+      addItemBtn.style.width = '26.2em';
       addItemBtn.addEventListener('click', function() {
         addItem(newList, itemInput.value);
         itemInput.value = '';
       });
       newList.appendChild(addItemBtn);
+      newList.appendChild(listTitleElement);
     }
 
     // Function to add a new item to the list
@@ -97,6 +74,11 @@
 
       const listItem = document.createElement('li');
       listItem.textContent = itemText;
+      listItem.style.display = 'flex';
+      listItem.style.flexFlow = 'row wrap';
+      listItem.style.width = '26em';
+      listItem.style.listStyleType = 'decimal';
+      listItem.style.overflow = 'hidden';
       list.appendChild(listItem);
     }
 

@@ -1,4 +1,4 @@
-@import url(normalize.css);
+@import url(css/normalize.css);
 :root {
 --back: linear-gradient(45deg, hsl(220, 41%, 11%), hsl(221, 40%, 11%), hsl(222, 39%, 12%));
 --text-shadow: 1px 1px 4px rgb(21, 25, 43); 
