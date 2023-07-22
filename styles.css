@@ -56,7 +56,9 @@ h1 {
     color: hsl(0, 0%, 97%);
     font-size: 2.3em;
     font-weight: bolder;
+    text-align: center;
     text-rendering: optimizeSpeed;
+    margin: 1%;
     animation: 8s titre ease-in-out infinite;
 }
 @keyframes titre {
@@ -107,4 +109,25 @@ form {
 footer {
     width: 100vw;
     height: 20vh;
+}
+@media screen and (max-width: 850px) {
+    nav,
+    nav>ul {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    main {
+        flex-flow: column nowrap;
+        align-items: space-around;
+        justify-content: center;
+        width: 100%;
+        height: auto;
+    }
+    section {
+        width: 98%;
+    }
+    footer {
+        height: 2em;
+    }
 }
