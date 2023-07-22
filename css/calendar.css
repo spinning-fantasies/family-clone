@@ -1,0 +1,34 @@
+
+    th, td {
+      border: 1px solid #ddd;
+      text-align: center;
+      padding: 8px;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    td {
+      height: 100px;
+      cursor: pointer;
+    }
+    td:hover {
+      background-color: hsl(247, 43%, 21%);
+    }
+    td.today {
+      color: hsl(193, 63%, 21%);
+      font-weight: bolder;
+      font-size: 1.2em;
+      animation: 4s today ease-in-out infinite;
+}
+@keyframes today {
+    from {
+        background-color: hsl(0, 0%, 83%);
+    }
+    50% {
+        background-color: hsl(0, 0%, 100%);
+    }
+    to {
+        background-color: hsl(0, 0%, 83%);
+    }
+}
+    
